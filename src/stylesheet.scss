@@ -1,0 +1,137 @@
+@import url("https://fonts.googleapis.com/css?family=Jua");
+
+body {
+  font-family: "Jua", sans-serif;
+}
+.game-wrapper {
+  width: 100%;
+  position: absolute;
+  min-height: 100%;
+  background: linear-gradient(
+    144deg,
+    red,
+    blue,
+    green,
+    yellow,
+    white,
+    lime,
+    rgb(255, 166, 0)
+  );
+  background-size: 1800%;
+  animation: rainbow 30s infinite;
+}
+
+input:focus {
+  outline: none;
+}
+
+.input {
+  padding: 0px 10px;
+  box-shadow: none;
+  border: none;
+  margin-top: 20px;
+  width: 200px;
+  height: 50px;
+  background-color: rgb(218, 218, 218);
+  font-size: 30px;
+}
+.wantedword {
+  font-size: 50px;
+  color: rgb(0, 0, 0) 1s;
+}
+.word-container {
+  width: fit-content;
+  min-width: fit-content;
+  margin: 0px auto;
+}
+.meter {
+  transition: all 100ms;
+  margin-bottom: 20px;
+  border-radius: 360px;
+  margin-top: 10px;
+  height: 10px;
+  background-color: black;
+}
+.results {
+  margin-left: auto;
+  margin-right: auto;
+  width: 80%;
+  text-align: center;
+  margin-top: 10vh;
+  font-size: 35x;
+  div {
+    display: inline;
+  }
+  margin-bottom: 10px;
+}
+.button {
+  cursor: pointer;
+  border: 1px solid black;
+  border-radius: 6px;
+  transition: all 1000ms;
+  width: 100px;
+  height: 50px;
+  text-align: center;
+  margin: 0px auto;
+  color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  &:hover {
+    background-color: black;
+    color: white;
+  }
+}
+
+@keyframes rainbow {
+  0% {
+    background-position: 0% 82%;
+  }
+  50% {
+    background-position: 100% 19%;
+  }
+  100% {
+    background-position: 0% 82%;
+  }
+}
+
+.results-screen {
+  height: 100%;
+  width: 100%;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  position: absolute;
+  background: linear-gradient(
+    124deg,
+    #ff2400,
+    #e81d1d,
+    #e8b71d,
+    #e3e81d,
+    #1de840,
+    #1ddde8,
+    #2b1de8,
+    #dd00f3,
+    #dd00f3
+  );
+  background-size: 1800% 1800%;
+
+  -webkit-animation: rainbow 18s ease infinite;
+  -z-animation: rainbow 18s ease infinite;
+  -o-animation: rainbow 18s ease infinite;
+  animation: rainbow 18s ease infinite;
+}
+.results-content {
+  transition: all 500ms;
+  position: relative;
+  top: -500px;
+}
+.wpm {
+  font-weight: 400;
+  padding: 10px;
+  font-size: 20px;
+  margin: 6px auto 0px auto;
+  letter-spacing: 0;
+}
+//hellohallo home i am testing only

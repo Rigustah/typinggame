@@ -3,6 +3,15 @@ import logo from "./logo.svg";
 import "./App.css";
 import "./stylesheet.css";
 
+function interVall(binding, newRoom)
+    {let eventTimer = setInterval(function() {
+      binding.setState({
+        roomNumber: newRoom,
+      })
+      clearInterval(eventTimer)
+    }, 2000)
+}
+
 let earlierLetterCount = 0;
 let start = false;
 const timer = (binding, option) => {
@@ -14,23 +23,34 @@ const timer = (binding, option) => {
         newseconds = 60;
       }
     } else {
-      newseconds = 0;
-      binding.setState({
-        contentPlacement: {
-          top: "10px"
-        }
-      });
-    }
+      if (binding.state.paused === false) {
+        binding.setState({
+          paused: true,
+          contentPlacement: {
+            top:"10px"
+          }
+        })
+      }
+      newseconds = 0;}
     binding.setState({
       secondsleft: newseconds
     });
-  }, 1000);
+  }, 100);
 };
 //hello
-const ResultScreen = ({ points, restart, style }) => {
+
+const HighScoreRoom = ({changeRoom, style}) => {
+  return(
+    <div className="room-container">
+    hello
+    <div onClick={() => changeRoom(0)} style={style}>Back</div>
+    </div>
+  )
+}
+
+const ResultScreen = ({ points, restart, style, changeRoom}) => {
   let words = Math.floor(points / 5) * 1;
   return (
-    <div class="results-screen">
       <div class="results-content" style={style}>
         <h1 class="results">
           You wrote {points} letters in one minute!{" "}
@@ -39,8 +59,10 @@ const ResultScreen = ({ points, restart, style }) => {
         <div class="button" onClick={restart}>
           <p class="button-text">Play again?</p>
         </div>
+        <div class="button" onClick={() => changeRoom(1)}>
+          <p class="button-text">High Scores</p>
+        </div>
       </div>
-    </div>
   );
 };
 
@@ -88,15 +110,47 @@ class App extends Component {
       secondsleft: 60,
       letters: 0,
       words: 0,
-      contentPlacement: {}
+      contentPlacement: {},
+      room1Style: {
+        top: "-500px"
+      },
+      roomNumber: 0,
+      paused: false,
     };
     this.dashvalue = React.createRef();
   }
+  changeRoom(newRoom) {
+    let newroom1Style;
+    let newContentPlacement;
+    if (newRoom !== 0) {
+      newroom1Style = 10
+      newContentPlacement = -500
+    } else {newContentPlacement = 10
+    newroom1Style = -500}
+
+      this.setState({
+      contentPlacement: {
+      top: newContentPlacement ,
+     }
+    })
+
+    this.setState({
+      room1Style: {
+        top: "10px"
+      }
+    })
+interVall(this, newRoom)
+
+
+console.log(this.state.room1Style)
+  }
   restart() {
     this.setState({
+
       contentPlacement: {
-        top: "-500px"
+        top: "-500px",
       },
+      paused: false,
       letters: 0,
       dash: "",
       secondsleft: 60,
@@ -174,13 +228,14 @@ class App extends Component {
       return <div>loading...</div>;
     }
     if (this.state.secondsleft === 0) {
+      let rooms = [<ResultScreen            points={this.state.letters}
+        restart={this.restart.bind(this)}
+        style={this.state.contentPlacement}
+        changeRoom = {this.changeRoom.bind(this)}/>, <HighScoreRoom changeRoom={this.changeRoom.bind(this)} style={this.state.room1Style}/>]
+        let currentRoom = rooms[this.state.roomNumber]
       return (
-        <div>
-          <ResultScreen
-            points={this.state.letters}
-            restart={this.restart.bind(this)}
-            style={this.state.contentPlacement}
-          />
+        <div class="results-screen">
+        {currentRoom}
         </div>
       );
     }
@@ -196,7 +251,7 @@ class App extends Component {
           wantedword={this.state.wantedWord}
           border={this.state.border}
         />
-        <Timer secondsLeft={this.state.secondsleft} />
+        <Timer secondsLeft={this.state.secondsleft  } />
         <div>{this.state.letters}</div>
       </div>
     );

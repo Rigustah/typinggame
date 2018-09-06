@@ -3,13 +3,31 @@ import logo from "./logo.svg";
 import "./App.css";
 import "./stylesheet.css";
 
+function animation(binding) {
+  let downAnimation = setInterval(function() {
+    console.log("signal here")
+    binding.setState({
+      room1Style: {
+        top: "500x"
+      },
+        contentPlacement: {
+          top: "500px"
+        }
+    })
+    console.log(binding.state.room1Style)
+    console.log(binding)
+    clearInterval(downAnimation)
+  }, 1000)
+}
+
+
 function interVall(binding, newRoom)
     {let eventTimer = setInterval(function() {
       binding.setState({
         roomNumber: newRoom,
       })
       clearInterval(eventTimer)
-    }, 2000)
+    }, 400)
 }
 
 let earlierLetterCount = 0;
@@ -41,9 +59,9 @@ const timer = (binding, option) => {
 
 const HighScoreRoom = ({changeRoom, style}) => {
   return(
-    <div className="room-container">
+    <div className="room-container"  style={style}>
     hello
-    <div onClick={() => changeRoom(0)} style={style}>Back</div>
+    <div onClick={() => changeRoom(0)}>Back</div>
     </div>
   )
 }
@@ -112,7 +130,7 @@ class App extends Component {
       words: 0,
       contentPlacement: {},
       room1Style: {
-        top: "-500px"
+      
       },
       roomNumber: 0,
       paused: false,
@@ -120,29 +138,22 @@ class App extends Component {
     this.dashvalue = React.createRef();
   }
   changeRoom(newRoom) {
-    let newroom1Style;
-    let newContentPlacement;
-    if (newRoom !== 0) {
-      newroom1Style = 10
-      newContentPlacement = -500
-    } else {newContentPlacement = 10
-    newroom1Style = -500}
 
-      this.setState({
-      contentPlacement: {
-      top: newContentPlacement ,
-     }
-    })
+this.setState({
+  room1Style: {
+    top: "-500px"
+  },
+    contentPlacement: {
+      top: "-500px"
+    }
+})
 
-    this.setState({
-      room1Style: {
-        top: "10px"
-      }
-    })
 interVall(this, newRoom)
+animation(this)
 
 
 console.log(this.state.room1Style)
+
   }
   restart() {
     this.setState({

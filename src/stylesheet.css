@@ -9,7 +9,8 @@ body {
   min-height: 100%;
   background: linear-gradient(144deg, red, blue, green, yellow, white, lime, #ffa600);
   background-size: 1800%;
-  animation: rainbow 30s infinite;
+  -webkit-animation: rainbow 30s infinite;
+          animation: rainbow 30s infinite;
 }
 
 input:focus {
@@ -18,7 +19,8 @@ input:focus {
 
 .input {
   padding: 0px 10px;
-  box-shadow: none;
+  -webkit-box-shadow: none;
+          box-shadow: none;
   border: none;
   margin-top: 20px;
   width: 200px;
@@ -33,12 +35,17 @@ input:focus {
 }
 
 .word-container {
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
   width: fit-content;
+  min-width: -webkit-fit-content;
+  min-width: -moz-fit-content;
   min-width: fit-content;
   margin: 0px auto;
 }
 
 .meter {
+  -webkit-transition: all 100ms;
   transition: all 100ms;
   margin-bottom: 20px;
   border-radius: 360px;
@@ -65,20 +72,39 @@ input:focus {
   cursor: pointer;
   border: 1px solid black;
   border-radius: 6px;
+  -webkit-transition: all 1000ms;
   transition: all 1000ms;
   width: 100px;
   height: 50px;
   text-align: center;
   margin: 0px auto 10px auto;
   color: black;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
 .button:hover {
   background-color: black;
   color: white;
+}
+
+@-webkit-keyframes rainbow {
+  0% {
+    background-position: 0% 82%;
+  }
+  50% {
+    background-position: 100% 19%;
+  }
+  100% {
+    background-position: 0% 82%;
+  }
 }
 
 @keyframes rainbow {
@@ -106,12 +132,11 @@ input:focus {
   background-size: 1800% 1800%;
   -webkit-animation: rainbow 18s ease infinite;
   -z-animation: rainbow 18s ease infinite;
-  -o-animation: rainbow 18s ease infinite;
   animation: rainbow 18s ease infinite;
 }
 
 .results-content {
-  background-color: pink;
+  -webkit-transition: all 500ms;
   transition: all 500ms;
   position: relative;
   top: -500px;
@@ -126,6 +151,21 @@ input:focus {
 }
 
 .room-container {
+  border: 1px solid black;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-transition: all 500ms;
   transition: all 500ms;
   padding: 10px;
   height: 500px;
@@ -133,5 +173,10 @@ input:focus {
   border-radius: 9px;
   position: relative;
   margin: 0px auto;
-  background-color: rgba(202, 202, 202, 0.623);
 }
+
+.room-container .back {
+  -ms-flex-item-align: end;
+      align-self: flex-end;
+}
+/*# sourceMappingURL=stylesheet.css.map */

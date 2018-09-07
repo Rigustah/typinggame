@@ -124,7 +124,6 @@ input:focus {
   animation: rainbow 18s ease infinite;
 }
 .results-content {
-  background-color: pink;
   transition: all 500ms;
   position: relative;
   top: -500px;
@@ -138,6 +137,11 @@ input:focus {
 }
 //hellohallo home i am testing only
 .room-container {
+  border: 1px solid black;
+  flex-direction: column;
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
   transition: all 500ms;
   padding: 10px;
   height: 500px;
@@ -145,6 +149,8 @@ input:focus {
   border-radius: 9px;
   position: relative;
   margin: 0px auto;
-
-  background-color: rgba(202, 202, 202, 0.623);
+  .back {
+    align-self: flex-end;
+  }
 }
+

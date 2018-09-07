@@ -3,22 +3,6 @@ import logo from "./logo.svg";
 import "./App.css";
 import "./stylesheet.css";
 
-function animation(binding) {
-  let downAnimation = setInterval(function() {
-    console.log("signal here")
-    binding.setState({
-      room1Style: {
-        top: "500x"
-      },
-        contentPlacement: {
-          top: "500px"
-        }
-    })
-    console.log(binding.state.room1Style)
-    console.log(binding)
-    clearInterval(downAnimation)
-  }, 1000)
-}
 
 
 function interVall(binding, newRoom)
@@ -59,9 +43,9 @@ const timer = (binding, option) => {
 
 const HighScoreRoom = ({changeRoom, style}) => {
   return(
-    <div className="room-container"  style={style}>
-    hello
-    <div onClick={() => changeRoom(0)}>Back</div>
+    <div className="room-container" style={style}>
+    <h1>Scoreboards</h1>
+    <div onClick={() => changeRoom(0)} class="button back">Back</div>
     </div>
   )
 }
@@ -138,18 +122,27 @@ class App extends Component {
     this.dashvalue = React.createRef();
   }
   changeRoom(newRoom) {
+    let newRoom1Style;
+    let newContentPlacement;
+if (newRoom !== 0) {
+newContentPlacement = "-500px"
+newRoom1Style = "10px"
+} else {
+newContentPlacement ="10px"
+newRoom1Style = "-1000px"
+}
+
 
 this.setState({
   room1Style: {
-    top: "-500px"
+    top: newRoom1Style
   },
     contentPlacement: {
-      top: "-500px"
+      top: newContentPlacement
     }
 })
 
 interVall(this, newRoom)
-animation(this)
 
 
 console.log(this.state.room1Style)

@@ -3,7 +3,7 @@ import logo from "./logo.svg";
 import "./App.css";
 import "./stylesheet.css";
 
-
+let nameEntered = false
 
 function interVall(binding, newRoom)
     {let eventTimer = setInterval(function() {
@@ -11,7 +11,7 @@ function interVall(binding, newRoom)
         roomNumber: newRoom,
       })
       clearInterval(eventTimer)
-    }, 400)
+    }, 300)
 }
 
 let earlierLetterCount = 0;
@@ -25,6 +25,9 @@ const timer = (binding, option) => {
         newseconds = 60;
       }
     } else {
+      localStorage.setItem(binding.state.currentUser, binding.state.letters)
+      console.log(localStorage)
+      clearInterval(mömmö)
       if (binding.state.paused === false) {
         binding.setState({
           paused: true,
@@ -33,7 +36,7 @@ const timer = (binding, option) => {
           }
         })
       }
-      newseconds = 0;}
+   }
     binding.setState({
       secondsleft: newseconds
     });
@@ -41,13 +44,33 @@ const timer = (binding, option) => {
 };
 //hello
 
+const EnterName = ({reference, setName}) => {
+  console.log(reference.current)
+  return (<div class="results-screen enter-name">
+    <h1>Enter your name here</h1>
+    <input ref={reference} className="name-input"></input>
+    <div class="button" onClick={() => setName(reference.current.value)}><p>Enter Game</p></div>
+  </div>)
+}
+
 const HighScoreRoom = ({changeRoom, style}) => {
+  let scores = Object.keys(localStorage).sort(function(x, y) {
+    if (localStorage[x] > localStorage[y]) return -1
+    if (localStorage[x] < localStorage[y]) return 1
+    return 0
+  }).map(key => {
+    return <div>
+    {key}:{localStorage[key]}
+  </div>
+
+  })
   return(
     <div className="room-container" style={style}>
     <h1>Scoreboards</h1>
+    {scores}
     <div onClick={() => changeRoom(0)} class="button back">Back</div>
     </div>
-  )
+  ) 
 }
 
 const ResultScreen = ({ points, restart, style, changeRoom}) => {
@@ -85,7 +108,7 @@ const Timer = ({ secondsLeft }) => {
   return <div>{secondsLeft}</div>;
 };
 const WantedWord = ({ wantedword, border }) => {
-  return (
+  return ( 
     <div class="word-container" style={{ width: "fit-content" }}>
       <div class="wantedword" style={border}>
         {wantedword}
@@ -118,9 +141,17 @@ class App extends Component {
       },
       roomNumber: 0,
       paused: false,
+      currentUser: undefined
     };
     this.dashvalue = React.createRef();
+    this.nameValue = React.createRef()
   }
+setName(newName) {
+  this.setState({
+    currentUser: newName
+  })
+  nameEntered = true
+}
   changeRoom(newRoom) {
     let newRoom1Style;
     let newContentPlacement;
@@ -146,9 +177,9 @@ interVall(this, newRoom)
 
 
 console.log(this.state.room1Style)
-
   }
   restart() {
+    nameEntered = false
     this.setState({
 
       contentPlacement: {
@@ -190,9 +221,11 @@ console.log(this.state.room1Style)
         });
       })
       .catch(err => console.error(err));
+      this.nameValue.current.value = ""
   }
   setValue(newValue) {
-    if (this.state.secondsleft === 60 && start === false) {
+    console.log(this.state.currentUser)
+    if (this.state.secondsleft === 60 && this.state.paused === false) {
       timer(this);
     }
     console.log(this.state.letters);
@@ -228,10 +261,11 @@ console.log(this.state.room1Style)
     }
   }
   render() {
+
     if (this.state.loading === true) {
       return <div>loading...</div>;
     }
-    if (this.state.secondsleft === 0) {
+    if (this.state.paused === true) {
       let rooms = [<ResultScreen            points={this.state.letters}
         restart={this.restart.bind(this)}
         style={this.state.contentPlacement}
@@ -243,6 +277,11 @@ console.log(this.state.room1Style)
         </div>
       );
     }
+    if (nameEntered === false) {
+      return <div>hi <EnterName reference = {this.nameValue} setName={this.setName.bind(this)}/></div>
+    }
+
+
     return (
       <div className="App">
         <Textfield
